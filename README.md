@@ -55,7 +55,7 @@ We have benchmarked the execution times of both CPU and GPU implementations. The
 
 ## Contributors
 - **Karan Yadav**
-- Team Members
+
 
 ## License
 This project is open-source under the MIT License.
