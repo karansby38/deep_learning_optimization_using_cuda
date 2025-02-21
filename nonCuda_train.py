@@ -7,17 +7,17 @@ from torch.utils.data import DataLoader, TensorDataset
 
 print("Script started...")
 
-# Define a deeper and wider MLP
+
 class DeepMLP(nn.Module):
     def __init__(self):
         super(DeepMLP, self).__init__()
-        self.fc1 = nn.Linear(2, 512)  # Increased neurons
+        self.fc1 = nn.Linear(2, 512)  
         self.fc2 = nn.Linear(512, 256)
         self.fc3 = nn.Linear(256, 128)
         self.fc4 = nn.Linear(128, 64)
         self.fc5 = nn.Linear(64, 32)
-        self.fc6 = nn.Linear(32, 16)  # Additional layer
-        self.fc7 = nn.Linear(16, 1)   # Output layer
+        self.fc6 = nn.Linear(32, 16)  
+        self.fc7 = nn.Linear(16, 1)   
     
     def forward(self, x):
         x = torch.relu(self.fc1(x))
@@ -29,16 +29,16 @@ class DeepMLP(nn.Module):
         return self.fc7(x)
 
 # Function to train the model
-def train_model(device, batch_size=1024, num_samples=50000):  # Increased dataset size
+def train_model(device, batch_size=1024, num_samples=50000):  
     print(f"Using device: {device}")
     
     model = DeepMLP().to(device)
     criterion = nn.BCEWithLogitsLoss().to(device)
-    optimizer = optim.AdamW(model.parameters(), lr=0.002)  # Lower learning rate for stability
+    optimizer = optim.AdamW(model.parameters(), lr=0.002) 
     
     # Generate dataset
     x_train = torch.rand(num_samples, 2, dtype=torch.float, device=device)
-    y_train = (x_train[:, 0] > 0.5).float().unsqueeze(1)  # Simple nonlinear function
+    y_train = (x_train[:, 0] > 0.5).float().unsqueeze(1)  
     
     dataset = TensorDataset(x_train, y_train)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
