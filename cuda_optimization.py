@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 print("Script started...")
 
-# Define a deeper and wider MLP
+
 class DeepMLP(nn.Module):
     def __init__(self):
         super(DeepMLP, self).__init__()
@@ -28,17 +28,17 @@ class DeepMLP(nn.Module):
         x = torch.relu(self.fc6(x))
         return self.fc7(x)
 
-# Function to train the model
-def train_model(device, batch_size=1024, num_samples=50000):  # Increased dataset size
+
+def train_model(device, batch_size=1024, num_samples=50000):  
     print(f"Using device: {device} ({torch.cuda.get_device_name(device)})")
     
     model = DeepMLP().to(device)
     criterion = nn.BCEWithLogitsLoss().to(device)
-    optimizer = optim.AdamW(model.parameters(), lr=0.002)  # Lower learning rate for stability
+    optimizer = optim.AdamW(model.parameters(), lr=0.002)  
     
     # Generate dataset
     x_train = torch.rand(num_samples, 2, dtype=torch.float, device=device)
-    y_train = (x_train[:, 0] > 0.5).float().unsqueeze(1)  # Simple nonlinear function
+    y_train = (x_train[:, 0] > 0.5).float().unsqueeze(1)  
     
     dataset = TensorDataset(x_train, y_train)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
@@ -51,7 +51,7 @@ def train_model(device, batch_size=1024, num_samples=50000):  # Increased datase
     
     scaler = torch.amp.GradScaler()
     
-    for epoch in range(1500):  # Increased epochs
+    for epoch in range(1500):  
         epoch_loss = 0.0
         for batch_x, batch_y in dataloader:
             optimizer.zero_grad()
